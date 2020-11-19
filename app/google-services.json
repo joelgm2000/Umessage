@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "85072017740",
+    "firebase_url": "https://umessage-c45e6.firebaseio.com",
+    "project_id": "umessage-c45e6",
+    "storage_bucket": "umessage-c45e6.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:85072017740:android:d1171544f70147e6a337e9",
+        "android_client_info": {
+          "package_name": "firebas.app.umessage"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "85072017740-cseuqiugmmhksqidcvpmvrboideta3tk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAZr7yHfFzDp7-zBp4WPG2OYnc-bWz4AF8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "85072017740-cseuqiugmmhksqidcvpmvrboideta3tk.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
