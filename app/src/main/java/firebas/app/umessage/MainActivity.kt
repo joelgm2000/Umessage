@@ -14,22 +14,32 @@ import androidx.viewpager.widget.ViewPager
 import com.google.android.material.tabs.TabLayout
 import androidx.fragment.app.FragmentPagerAdapter
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseAuth.*
+import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.database.*
+import com.squareup.picasso.Picasso
 import firebas.app.umessage.Fragments.ChatsFragment
 import firebas.app.umessage.Fragments.SearchFragment
 import firebas.app.umessage.Fragments.SettingsFragment
+import firebas.app.umessage.ModelClasses.Users
 import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
+
+    var refUsers: DatabaseReference? = null
+    var firebaseUser: FirebaseUser? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar_main)
 
+        firebaseUser = FirebaseAuth.getInstance().currentUser
+        refUsers = FirebaseDatabase.getInstance().reference.child("Users").child(firebaseUser!!.uid)
+
         val toolbar: Toolbar = findViewById(R.id.toolbar_main)
         setSupportActionBar(toolbar)
-
         supportActionBar!!.title = ""
 
         val tabLayout: TabLayout=findViewById(R.id.tab_layout)
@@ -42,6 +52,22 @@ class MainActivity : AppCompatActivity() {
 
         viewPager.adapter=viewPagerAdapter
         tabLayout.setupWithViewPager(viewPager)
+
+        //display username and profile picture
+        refUsers!!.addValueEventListener(object : ValueEventListener{
+            override fun onDataChange(p0: DataSnapshot) {
+                if(p0.exists()){
+                    val user: Users? = p0.getValue(Users::class.java)
+
+                    user_name.text = user!!.getUserName()
+                    Picasso.get().load(user.getProfile()).placeholder(R.drawable.profile).into(profile_image);
+                }
+            }
+
+            override fun onCancelled(p0: DatabaseError) {
+
+            }
+        })
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -56,7 +82,7 @@ class MainActivity : AppCompatActivity() {
         // as you specify a parent activity in AndroidManifest.xml.
         when (item.itemId) {
             R.id.action_logout -> {
-                FirebaseAuth.getInstance().signOut()
+                getInstance().signOut()
                 val intent = Intent(this@MainActivity, WelcomeActivity::class.java)
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
                 startActivity(intent)
