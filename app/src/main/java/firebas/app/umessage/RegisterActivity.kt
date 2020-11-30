@@ -8,15 +8,17 @@ import androidx.appcompat.widget.Toolbar
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
+import firebas.app.umessage.AdapterClasses.UserAdapter
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_register.*
 import java.sql.DatabaseMetaData
 
 class RegisterActivity : AppCompatActivity() {
 
-    private lateinit var mAuth: FirebaseAuth
-    private lateinit var refUsers: DatabaseReference
-    private var firebaseUserID: String = ""
+    public lateinit var mAuth: FirebaseAuth
+    public lateinit var refUsers: DatabaseReference
+    public var firebaseUserID: String = ""
+    public var userAdapter: UserAdapter? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -79,6 +81,7 @@ class RegisterActivity : AppCompatActivity() {
                                 val intent = Intent(this@RegisterActivity, MainActivity::class.java)
                                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
                                 startActivity(intent)
+
                                 finish()
                             }
                         }
